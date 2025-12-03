@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tirada de Tarot</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background: radial-gradient(circle at top, #4b2b75, #1a1028);
+    background-attachment: fixed;
+        overflow-x: hidden;
+        color: #fff;
+    }
+
+
+    .container {
+        position: relative;
+        width: 100%;
+        max-width: 900px;
+        margin: auto;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .cards {
+        position: relative;
+        width: 100%;
+        margin-top: 30px;
+    }
+
+    /* CARTAS */
+    .card {
+        width: 120px;
+        aspect-ratio: 2/3;
+        position: absolute;
+        cursor: pointer;
+        perspective: 1000px; /* Necesario para animación 3D */
+    }
+
+    /* La imagen va dentro */
+    .inner {
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+    }
+
+    /* POSICIONES EXACTAS */
+    .c1 { top: 50px; left: 190px; }
+
+    .c2 { top: 0px; left: 50%; transform: translateX(-50%); }
+
+    .c3 { top: 50px; right: 190px; }
+
+    .c4 { top: 200px; left: 1px; }
+
+    .c5 { top: 200px; right: 1px; }
+
+    .c6 { top: 370px; left: 190px; }
+
+    .c7 { top: 370px; right: 190px; }
+
+    /* RESPONSIVO */
+    @media(max-width: 700px){
+        .card { width: 90px; }
+    }
+    @media(max-width: 500px){
+        .card { width: 75px; }
+    }
+
+    /* BOTÓN */
+    #actionBtn {
+        margin-top: 250px;
+        padding: 14px 30px;
+        border-radius: 30px;
+        border: none;
+        background: #8b5bd3;
+        color: #fff;
+        font-size: 18px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    #actionBtn:hover {
+        background: #a37ff2;
+    }
+
+    /* MODAL */
+    .modal-bg {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.6);
+        backdrop-filter: blur(6px);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal {
+    width: 85%;
+    max-width: 500px;
+    background: #311c4d;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 0 20px #0007;
+    border: 1px solid #8b5bd3;
+    position: relative;
+
+    max-height: 80vh;       /* máximo 80% de la altura de la ventana */
+    overflow-y: auto;       /* activa scroll si el contenido excede la altura */
+}
+
+
+    .modal h2 {
+        margin-top: 0;
+        text-align: center;
+    }
+
+    .closeModal {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        background: transparent;
+        border: none;
+        color: #fff;
+        font-size: 22px;
+        cursor: pointer;
+    }
+
+   /* ============================
+   RESPONSIVE PARA CELULAR
+   ============================ */
+@media (max-width: 600px) {
+
+    /* Tamaño de las cartas más pequeño */
+    .card {
+        width: 100px; /* o el tamaño que prefieras */
+    }
+
+    /* REACOMODA LAS POSICIONES MÓVILES */
+    .c1 { top: 10vh; left: 10%; }
+    .c2 { top: 5vh; left: 50%; transform: translateX(-50%); }
+    .c3 { top: 10vh; right: 10%; }
+
+    .c4 { top: 30vh; left: 2%; }
+    .c5 { top: 30vh; right: 2%; }
+
+    .c6 { top: 50vh; left: 10%; }
+    .c7 { top: 50vh; right: 10%; }
+
+    /* Ajuste del botón */
+     #actionBtn {
+        margin-top: 37vh; /* más abajo en pantallas pequeñas */
+        font-size: 16px;   /* opcional para que no se vea gigante */
+    }
+
+    .modal {
+        width: 90%;         /* un poco más pequeño que en desktop */
+        max-width: 300px;   /* limita el tamaño máximo */
+        padding: 15px;      /* menos padding para que se vea más compacto */
+        max-height: 70vh;   /* menos altura para que quede mejor en pantalla pequeña */
+    }
+
+    .modal h2 {
+        font-size: 18px;    /* título un poco más pequeño */
+    }
+
+    .modal p {
+        font-size: 14px;    /* texto más legible en pantalla pequeña */
+    }
+}
+
+</style>
+</head>
+
+
+<div class="container">
+
+    <!-- CARTAS -->
+    <div class="cards">
+
+        <div class="card c1">
+            <div class="inner" data-front="asdebastos.png" style="background-image:url('atras.png')"></div>
+        </div>
+
+        <div class="card c2">
+            <div class="inner" data-front="cincodeespadas.png" style="background-image:url('atras.png')"></div>
+        </div>
+
+        <div class="card c3">
+            <div class="inner" data-front="caballerodeoros.png" style="background-image:url('atras.png')"></div>
+        </div>
+
+        <div class="card c4">
+            <div class="inner" data-front="elsol.png" style="background-image:url('atras.png')"></div>
+        </div>
+
+        <div class="card c5">
+            <div class="inner" data-front="cuatrodeoros.png" style="background-image:url('atras.png')"></div>
+        </div>
+
+        <div class="card c6">
+            <div class="inner" data-front="latorre.png" style="background-image:url('atras.png')"></div>
+        </div>
+
+        <div class="card c7">
+            <div class="inner" data-front="reydeoros.png" style="background-image:url('atras.png')"></div>
+        </div>
+
+    </div>
+
+    <button id="actionBtn">Revelar Cartas</button>
+</div>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg">
+    <div class="modal">
+        <button class="closeModal" id="closeModal">&times;</button>
+        <h2>Lectura de la Tirada</h2>
+       <p> Esta es la tirada de la herradura, es una tirada específica con siete cartas en forma de herradura que puede guiarte a explorar las influencias pasadas, presentes y futuras, así como los desafíos y oportunidades que puedas estar por pasar.</p>
+
+<p>La carta de La Torre en esta posición nos indica el pasado reciente; es probable que vengas de un período de cambios bruscos, revelaciones o rupturas necesarias. Algo que era inestable finalmente cayó. Puede haber sido una relacion, un trabajo, un plan o una manera de vivir que no te convenía. Aunque fuera doloroso o inesperado, este "quiebre" te abrió un camino completamente nuevo.</p>  
+
+<p>La carta de El Sol en esta posición indica tu situación actual, el presente que estás viviendo; ahora mismo puede que estés en un momento de claridad, optimismo y renovación. Estás comenzando a ver "la luz después del caos" por así decirlo. Volvés a tener una buena energía, confianza y una sensación de que las cosas están por mejorar. Esta carta expresa éxito, tener apoyo de personas sinceras y relaciones positivas.</p>
+
+<p>La carta del As de Bastos en esta posición indica el futuro; internamente puede que estés lista para iniciar algo nuevo: un proyecto, una relación, un emprendimiento o una etapa vital más apasionada. Tendrás creatividad, impulso y oportunidades para lo que te propongas. Y quizás no lo verbalicés pero por dentro sentís el deseo de avanzar, seguir adelante y arriesgarte por lo que querés lograr.</p>
+
+<p>La carta del Cinco de Espadas en esta posición nos indica lo mejor que podrías hacer en tu situación, "el mejor curso de acción" o "la manera de actuar"; el consejo que te deja esta carta es que tengas cuidados con los conflictos y el ego. Es mejor que te evites enfrentamientos innecesarios, no intentés ganar a toda costa y elige sabiamente las batallas por las que quieras pelear. Esta carta igual puede indicar que debes de aprender de las derrotas pasadas para poder seguir adelante.</p>
+
+<p>La carta del Caballero de Oros en esta posición indica la influencia que tienen las personas a tu alrededor; hay personas a tu alrededor que te aportan estabilidad, paciencia y apoyo práctico. Esta carta simboliza la confiabilidad y constancia, ya sea alguien o un entorno que te ayuda a mantener tu rumbo de manera segura. </p>  
+
+<p>La carta del Cuatro de Oros en esta posición nos indica tus obstáculos y miedos; tu miedo principal puede ser perder la seguridad o los recursos que tenés actualmente, salir de tu zona de confort. Esta carta indica que podés tener tendencia a aferrarte demasiado a lo conocido, resistiéndote a cambios que pueden llegar a ser positivos para vos. Esa sensación de "no arriesgar" te limita en el progreso que te espera más adelante. </p>
+
+<p>Y por último, la carta del Rey de Oros en esta posición indica el desenlace; si superas tus miedos y obstáculos, podrás llegar al éxito material, estabilidad, madurez y prosperidad. Esta carta suele hablar sobre alcanzar una etapa de dominio, seguridad financiera y decisiones prácticas que rinden frutos. Todo esto indica que llegarás a cumplir con lo que te comprometas, te sentirás segura y estarás en el control, tanto de forma personal como financiera. </p>
+    </div>
+</div>
+
+<script>
+    let revealed = false;
+
+    const button = document.getElementById("actionBtn");
+    const cards = document.querySelectorAll(".card");
+    const modalBg = document.getElementById("modalBg");
+    const closeModal = document.getElementById("closeModal");
+
+    button.addEventListener("click", () => {
+        if (!revealed) {
+
+            cards.forEach(card => {
+                const inner = card.querySelector(".inner");
+
+                inner.style.transform = "rotateY(180deg)";
+
+                setTimeout(() => {
+                    inner.style.backgroundImage = `url('${inner.dataset.front}')`;
+                    inner.style.transform = "rotateY(0deg)";
+                }, 300);
+            });
+
+            button.textContent = "Ver Lectura";
+            revealed = true;
+
+        } else {
+            modalBg.style.display = "flex";
+        }
+    });
+
+    closeModal.addEventListener("click", () => {
+        modalBg.style.display = "none";
+    });
+
+    window.addEventListener("click", e => {
+        if (e.target === modalBg) modalBg.style.display = "none";
+    });
+</script>
+
+</body>
+</html>
